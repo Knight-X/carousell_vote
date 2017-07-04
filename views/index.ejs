@@ -21,5 +21,23 @@ ul li {color: red; }
             <% } %>
         </ul>
     </body>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        $('#vote_but').click(function() {
+            $.ajax({
+                url: 'http://127.0.0.1:3000/vote', 
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringfy({"d": "g"}),
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(xhr, test, thrown) {
+                    console.log(xhr);
+                }
+            });
+        });
+    </script>
 
 </html>
