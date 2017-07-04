@@ -19,6 +19,13 @@ app.post('/create', jsonParser, function(req, res) {
     res.json({publish: 'y'});
 });
 
+app.post('/vote', jsonParser, function(req, res) {
+    console.log(req.body);
+    //mem[id]['votes'] += 1;
+    res.json({m: 'g'});
+});
+
+
 var server = app.listen(3000, function() {
     var host = server.address().address;
     var port = server.address().port;
