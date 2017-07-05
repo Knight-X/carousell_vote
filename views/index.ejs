@@ -30,7 +30,24 @@ ul li {color: red; }
         $('.vote_but').click(function() {
             var target = $(this);
             $.ajax({
-                url: 'http://127.0.0.1:3000/vote', 
+                url: 'http://127.0.0.1:3000/upvote', 
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify({"id": $(this).siblings('.topicid').text()}),
+                success: function(data) {
+                    target.siblings('.vote_v').text = data.votes;
+                    location.reload();
+                },
+                error: function(xhr, test, thrown) {
+                    console.log(xhr);
+                }
+            });
+        });
+        $('.unvote_but').click(function() {
+            var target = $(this);
+            $.ajax({
+                url: 'http://127.0.0.1:3000/downvote', 
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
