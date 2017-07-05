@@ -17,6 +17,7 @@ function desSort(a, b) {
     }
     return 0;
 }
+//graph 20 articles and sort by the key of each topic
 app.get('/', function(req, res) {
     var arr = mem.sort(desSort);
     var rest = [];
@@ -35,7 +36,7 @@ app.post('/create', jsonParser, function(req, res) {
 });
 
 
-
+//increase the vote of article and return the votes num for rendering
 app.post('/upvote', jsonParser, function(req, res) {
     console.log(req.body);
     var id = req.body.id;
@@ -43,6 +44,7 @@ app.post('/upvote', jsonParser, function(req, res) {
     var v_num = mem[id]['votes'];
     res.json({votes: v_num});
 });
+//decrease the vote of article and return the votes num for rendering
 app.post('/downvote', jsonParser, function(req, res) {
     console.log(req.body);
     var id = req.body.id;
