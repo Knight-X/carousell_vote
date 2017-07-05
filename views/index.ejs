@@ -28,7 +28,7 @@ ul li {color: red; }
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $('#vote_but').click(function() {
-            var s = $(this).siblings('#topicid');
+            var target = $(this);
             $.ajax({
                 url: 'http://127.0.0.1:3000/vote', 
                 type: "POST",
@@ -36,7 +36,8 @@ ul li {color: red; }
                 dataType: 'json',
                 data: JSON.stringify({"id": $(this).siblings('#topicid').text()}),
                 success: function(data) {
-                    console.log(data.votes);
+                    target.siblings('#vote_v').text = data.votes;
+                    location.reload();
                 },
                 error: function(xhr, test, thrown) {
                     console.log(xhr);
