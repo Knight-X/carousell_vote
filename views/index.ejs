@@ -12,18 +12,38 @@ ul li {color: red; }
         <ul>
             <% for (var i = 0; i < topics.length; i++) {%>
             <li>
-                    <tr id="titlenum"> <%= i %> </tr>
+                    <tr> <a id="topicid"><%= i %></a> </tr>
                     <tr>Topic: <%= topics[i].title %> </tr>
-                    <tr id="vote_v"><%= topics[i].votes %></tr>
-                    <input id="vote_but" type="submit" value="Vote"> 
-                    <input id="unvote_but" type="submit" value="Unvote"> 
+                    <tr> <a id="vote_v"><%= topics[i].votes %></a></tr>
+                    <input id="vote_but" type="submit" value=3> 
+                    <input id="unvote_but" type="submit" value=2> 
             </li>
             <% } %>
         </ul>
+        <form>
+            <input type="text" value="new topic">
+            <input id="new_but" type="submit" value="create">
+        </form>
     </body>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $('#vote_but').click(function() {
+            var s = $(this).siblings('#topicid');
+            $.ajax({
+                url: 'http://127.0.0.1:3000/vote', 
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify({"id": $(this).siblings('#topicid').text()}),
+                success: function(data) {
+                    console.log(data.votes);
+                },
+                error: function(xhr, test, thrown) {
+                    console.log(xhr);
+                }
+            });
+        });
+        $('#new_but').click(function() {
             $.ajax({
                 url: 'http://127.0.0.1:3000/vote', 
                 type: "POST",
