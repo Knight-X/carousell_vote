@@ -10,13 +10,13 @@ ul li {color: red; }
 .emphasis {color: green;}
 </style>
         <ul>
-            <% for (var i = 0; i < topics.length; i++) {%>
+            <% for (var i in topics) {%>
             <li>
                     <tr> <a class="topicid"><%= i %></a> </tr>
                     <tr>Topic: <%= topics[i].title %> </tr>
                     <tr> <a class="vote_v"><%= topics[i].votes %></a></tr>
-                    <input class="vote_but" type="submit" value=3> 
-                    <input class="unvote_but" type="submit" value=2> 
+                    <input class="vote_but" type="submit" value="upvote"> 
+                    <input class="unvote_but" type="submit" value="downvote"> 
             </li>
             <% } %>
         </ul>
