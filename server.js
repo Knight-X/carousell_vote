@@ -3,21 +3,38 @@ var bodyParser = require('body-parser');
 var app = express();
 var jsonParser = bodyParser.json({type: 'application/json'});
 
-var mem = [] 
-mem[0] = {title: "kai", votes: 5};
-mem[1] = {title: "gy", votes: 6};
+var mem = [];
+
 console.log(mem);
 app.set('view engine', 'ejs');
+
+function desSort(a, b) {
+    if (a.votes > b.votes) {
+        return -1;
+    }
+    if (a.votes < b.votes) {
+        return 1;
+    }
+    return 0;
+}
 app.get('/', function(req, res) {
+    var arr = mem.sort(desSort);
+    var rest = [];
+    for (var i = 0; i < 20 && i < arr.length; i++) {
+        rest[i] = arr[i];
+    }
     res.render('index', {
-        topics: mem,
+        topics: rest,
     });
 });
+//create new topic, store in memory which is an array
 app.post('/create', jsonParser, function(req, res) {
     console.log(req.body);
     mem.push({title: req.body.topic, votes: 0});
     res.json({publish: 'y'});
 });
+
+
 
 app.post('/upvote', jsonParser, function(req, res) {
     console.log(req.body);

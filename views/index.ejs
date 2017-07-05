@@ -3,27 +3,53 @@
     <head>
         <meta charset = "UTF-8">
         <title>Title</title>
+        <style>
+            body{
+                font-size: 16px;
+            }
+            form.create{
+                margin-top: 50px;
+                margin-left: 20px;
+            }
+            table.list {
+                margin: 20px;
+                width: 100%;
+            }
+            table.list th.ID {
+                padding: 5px;
+                width: 14px;
+                background-color: #e0e0e0;
+            }
+            table.list tr {
+                border-bottom: solid 1px gray;
+            }
+            table.list td {
+                padding: 5px;
+                }
+            table.list td: nth-child(2) {
+                width: 50%;
+            }
+
+        </style>
     </head>
     <body>
-<style>
-ul li {color: red; }
-.emphasis {color: green;}
-</style>
-        <ul>
-            <% for (var i in topics) {%>
-            <li>
-                    <tr> <a class="topicid"><%= i %></a> </tr>
-                    <tr>Topic: <%= topics[i].title %> </tr>
-                    <tr> <a class="vote_v"><%= topics[i].votes %></a></tr>
-                    <input class="vote_but" type="submit" value="upvote"> 
-                    <input class="unvote_but" type="submit" value="downvote"> 
-            </li>
-            <% } %>
-        </ul>
-        <form>
+        <form class="create">
             <input id="new_article" type="text" value="new topic">
             <input id="new_but" type="submit" value="create">
         </form>
+        <table class="list">
+            <thead><tr><th>ID</th><th>TOPIC</th><th>VOTES</th><th></th><th></th></tr></thead>
+            <tbody>
+            <% for (var i in topics) {%>
+            <tr><th class="ID"> <a class="topicid"><%= i %></a> </th>
+                    <td>Topic: <%= topics[i].title %> </td>
+                    <td> <a class="vote_v"><%= topics[i].votes %></a></td>
+                    <td colspan="2" style="text-align: right"><button topicid="<%= i %>" class="vote_but">UpVote</button>
+                        <button topicid="<%= i %>" class="unvote_but">DownVote</button> </td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
     </body>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
@@ -34,7 +60,7 @@ ul li {color: red; }
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
-                data: JSON.stringify({"id": $(this).siblings('.topicid').text()}),
+                data: JSON.stringify({"id": target.attr('topicid')}),
                 success: function(data) {
                     target.siblings('.vote_v').text = data.votes;
                     location.reload();
@@ -51,7 +77,7 @@ ul li {color: red; }
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
-                data: JSON.stringify({"id": $(this).siblings('.topicid').text()}),
+                data: JSON.stringify({"id": target.attr('topicid')}),
                 success: function(data) {
                     target.siblings('.vote_v').text = data.votes;
                     location.reload();
